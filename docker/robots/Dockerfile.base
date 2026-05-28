@@ -5,7 +5,10 @@ WORKDIR /app
 RUN apt-get update && apt-get install -y --no-install-recommends \
     libgl1 \
     libglib2.0-0 \
+    ffmpeg \
     && rm -rf /var/lib/apt/lists/*
+
+RUN pip install --no-cache-dir torch --index-url https://download.pytorch.org/whl/cpu
 
 COPY src/pico_teleop_robot /src/pico_teleop_robot
 RUN pip install --no-cache-dir /src/pico_teleop_robot
