@@ -1,3 +1,4 @@
-FROM ghcr.io/${GITHUB_REPOSITORY:-pico-teleop}/robot-base:latest
+ARG BASE_IMAGE=ghcr.io/soul667/pico_teleop_ws/robot-base:latest
+FROM ${BASE_IMAGE}
 
 CMD ["--server-url", "ws://SERVER_IP:38270", "--cameras", "0", "1", "--dof", "14"]

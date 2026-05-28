@@ -1,4 +1,4 @@
-import { Card, Select, Switch, Slider, Button, Space, Typography, Divider } from 'antd';
+import { Card, Select, Slider, Button, Space, Typography } from 'antd';
 import { PlayCircleOutlined, PauseCircleOutlined } from '@ant-design/icons';
 import ROSLIB from 'roslib';
 

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Card, Button, Typography, Space, Tag, Alert } from 'antd';
+import { Card, Button, Typography, Space, Alert } from 'antd';
 import { AudioOutlined } from '@ant-design/icons';
 import { useVoice } from '../hooks/useVoice';
 

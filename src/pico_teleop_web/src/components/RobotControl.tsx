@@ -116,7 +116,7 @@ export function RobotControl({ ros, connected }: RobotControlProps) {
 
     service.callService(
       request,
-      (res) => {
+      (res: { success: boolean; message: string }) => {
         if (res.success) {
           handleSuccess();
         } else {
@@ -124,7 +124,7 @@ export function RobotControl({ ros, connected }: RobotControlProps) {
           handleSuccess();
         }
       },
-      (err) => {
+      (err: string) => {
         console.error("Service error calling /teleop/record:", err);
         handleSuccess();
       }

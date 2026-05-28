@@ -1,5 +1,5 @@
 ARG ROS_DISTRO=jazzy
-FROM ros:${ROS_DISTRO}-ros-base AS base
+FROM ros:${ROS_DISTRO}-ros-base
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV ROS_DISTRO=${ROS_DISTRO}
@@ -7,7 +7,6 @@ ENV ROS_DISTRO=${ROS_DISTRO}
 RUN apt-get update && apt-get install -y --no-install-recommends \
     python3-pip \
     python3-colcon-common-extensions \
-    python3-rosdep \
     ros-${ROS_DISTRO}-rosbridge-server \
     ros-${ROS_DISTRO}-robot-state-publisher \
     ros-${ROS_DISTRO}-tf2-ros \
@@ -15,52 +14,20 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     ros-${ROS_DISTRO}-trajectory-msgs \
     ros-${ROS_DISTRO}-moveit \
     ros-${ROS_DISTRO}-moveit-py \
-    git curl wget \
     && rm -rf /var/lib/apt/lists/*
 
-# ============================================================
-# cuRobo dependencies
-# ============================================================
-FROM base AS curobo
-
-RUN pip3 install --no-cache-dir \
-    torch==2.4.0 --index-url https://download.pytorch.org/whl/cu121
-
-RUN pip3 install --no-cache-dir \
-    numpy<2 \
-    scipy \
-    pyyaml \
-    trimesh \
-    yourdfpy \
-    warp-lang
-
-RUN pip3 install --no-cache-dir \
-    "nvidia-curobo[all]" \
-    || pip3 install --no-cache-dir \
-    curobo
-
-# ============================================================
-# TRAC-IK (alternative fast IK)
-# ============================================================
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    ros-${ROS_DISTRO}-trac-ik \
-    && rm -rf /var/lib/apt/lists/* \
-    || echo "trac-ik not available for ${ROS_DISTRO}, skipping"
-
-# ============================================================
-# Python teleop dependencies
-# ============================================================
-RUN pip3 install --no-cache-dir \
+RUN pip3 install --no-cache-dir --break-system-packages \
     transforms3d \
     spatialmath-python \
     websockets \
-    msgpack
+    msgpack \
+    numpy
 
-# ============================================================
-# Workspace setup
-# ============================================================
 WORKDIR /ws
-COPY src/ /ws/src/
+COPY src/pico_teleop_msgs /ws/src/pico_teleop_msgs
+COPY src/pico_teleop_core /ws/src/pico_teleop_core
+COPY src/pico_teleop_drivers /ws/src/pico_teleop_drivers
+COPY src/pico_teleop_bringup /ws/src/pico_teleop_bringup
 
 RUN . /opt/ros/${ROS_DISTRO}/setup.sh && \
     colcon build --symlink-install --packages-select \
