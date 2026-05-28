@@ -1,0 +1,46 @@
+services:
+  server:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.server
+      args:
+        ROS_DISTRO: humble
+    container_name: pico_teleop_server
+    runtime: nvidia
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=all
+      - ROS_DOMAIN_ID=0
+    network_mode: host
+    volumes:
+      - ../src:/ws/src
+    command: ros2 launch pico_teleop_bringup teleop.launch.py
+    restart: unless-stopped
+
+  web:
+    image: node:20-slim
+    container_name: pico_teleop_web
+    working_dir: /app
+    volumes:
+      - ../src/pico_teleop_web:/app
+    ports:
+      - "3000:3000"
+    command: sh -c "npm install && npm run dev -- --host 0.0.0.0"
+    depends_on:
+      - server
+
+  voice:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.voice
+    container_name: pico_teleop_voice
+    runtime: nvidia
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=all
+      - TRANSFORMERS_CACHE=/root/.cache/huggingface
+    network_mode: host
+    volumes:
+      - ~/.cache/huggingface:/root/.cache/huggingface
+    depends_on:
+      - server

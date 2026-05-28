@@ -1,0 +1,3 @@
+FROM ghcr.io/${GITHUB_REPOSITORY:-pico-teleop}/robot-base:latest
+
+CMD ["--server-url", "ws://SERVER_IP:38270", "--cameras", "0", "1", "--dof", "14"]

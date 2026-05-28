@@ -1,0 +1,7 @@
+# Switch IK solver at runtime
+# Request
+string solver_name  # "curobo" | "moveit" | "trac_ik"
+---
+# Response
+bool success
+string message

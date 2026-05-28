@@ -1,0 +1,40 @@
+# Unitree G1 dual arm configuration
+arm:
+  name: unitree_g1
+  type: dual
+  dof: 7  # per arm
+  urdf_path: $(find pico_teleop_bringup)/config/arms/unitree_g1.urdf
+  base_frame: torso_link
+  ee_frame_left: left_hand_link
+  ee_frame_right: right_hand_link
+  has_gripper: true
+
+  joint_names_left:
+    - left_shoulder_pitch
+    - left_shoulder_roll
+    - left_shoulder_yaw
+    - left_elbow_pitch
+    - left_wrist_yaw
+    - left_wrist_pitch
+    - left_wrist_roll
+
+  joint_names_right:
+    - right_shoulder_pitch
+    - right_shoulder_roll
+    - right_shoulder_yaw
+    - right_elbow_pitch
+    - right_wrist_yaw
+    - right_wrist_pitch
+    - right_wrist_roll
+
+  workspace:
+    x_min: -0.6
+    x_max: 0.6
+    y_min: -0.8
+    y_max: 0.8
+    z_min: 0.0
+    z_max: 1.0
+
+  retarget:
+    workspace_scale: 0.8
+    origin_offset: [0.0, 0.0, 0.4]

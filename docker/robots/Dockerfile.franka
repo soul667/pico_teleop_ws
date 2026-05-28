@@ -1,0 +1,7 @@
+FROM ghcr.io/${GITHUB_REPOSITORY:-pico-teleop}/robot-base:latest
+
+RUN pip install --no-cache-dir \
+    frankx>=0.3.0 \
+    panda-python>=0.8.0
+
+CMD ["--server-url", "ws://SERVER_IP:38270", "--cameras", "0", "--dof", "7"]

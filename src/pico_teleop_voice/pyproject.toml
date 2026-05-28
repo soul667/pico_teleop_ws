@@ -1,0 +1,26 @@
+[project]
+name = "pico-teleop-voice"
+version = "0.1.0"
+description = "Voice control module: ASR (Fun-ASR-Nano) + LLM intent (Qwen3.5) + TTS"
+requires-python = ">=3.10"
+dependencies = [
+    "websockets>=12.0",
+    "numpy>=1.24",
+    "funasr>=1.0",
+    "torch>=2.1",
+    "transformers>=4.40",
+    "soundfile>=0.12",
+    "msgpack>=1.0",
+]
+
+[project.optional-dependencies]
+tts = ["supertonic>=0.1"]
+dev = ["ruff", "pytest", "pyaudio"]
+
+[project.scripts]
+pico-voice = "pico_teleop_voice.server:main"
+pico-voice-test = "pico_teleop_voice.test_standalone:main"
+
+[tool.ruff]
+line-length = 120
+target-version = "py310"

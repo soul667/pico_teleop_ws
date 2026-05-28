@@ -1,0 +1,37 @@
+# ROS2
+build/
+install/
+log/
+*.pyc
+__pycache__/
+*.egg-info/
+
+# Python
+.venv/
+*.egg
+dist/
+.eggs/
+
+# Node.js
+node_modules/
+src/pico_teleop_web/dist/
+src/pico_teleop_web/node_modules/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Docker
+docker/.env
+
+# Misc
+*.bag
+*.db3
+*.log

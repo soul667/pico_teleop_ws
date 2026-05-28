@@ -1,0 +1,6 @@
+FROM ghcr.io/${GITHUB_REPOSITORY:-pico-teleop}/robot-base:latest
+
+RUN pip install --no-cache-dir \
+    unitree-sdk2-python>=0.1.0
+
+CMD ["--server-url", "ws://SERVER_IP:38270", "--cameras", "0", "1", "--dof", "14"]

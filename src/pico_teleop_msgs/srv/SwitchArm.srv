@@ -1,0 +1,8 @@
+# Switch arm configuration at runtime
+# Request
+string arm_name  # e.g. "unitree_g1", "franka_single", "isaacsim"
+---
+# Response
+bool success
+string message
+string urdf_path

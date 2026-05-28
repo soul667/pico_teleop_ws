@@ -1,0 +1,28 @@
+ARG BASE_IMAGE=nvidia/cuda:12.1.0-runtime-ubuntu22.04
+FROM ${BASE_IMAGE}
+
+ENV DEBIAN_FRONTEND=noninteractive
+ENV PYTHONUNBUFFERED=1
+ENV TRANSFORMERS_CACHE=/root/.cache/huggingface
+
+# Install Python 3.10
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    python3.10 \
+    python3.10-venv \
+    python3-pip \
+    curl \
+    git \
+    && rm -rf /var/lib/apt/lists/*
+
+# Create symlinks for python3
+RUN ln -sf /usr/bin/python3.10 /usr/bin/python3 && \
+    ln -sf /usr/bin/python3.10 /usr/bin/python
+
+WORKDIR /ws
+
+# Install the voice package
+COPY src/pico_teleop_voice/ /ws/src/pico_teleop_voice/
+RUN pip3 install --no-cache-dir /ws/src/pico_teleop_voice/
+
+ENTRYPOINT ["pico-voice"]
+CMD ["--device", "cuda:0", "--port", "38271"]

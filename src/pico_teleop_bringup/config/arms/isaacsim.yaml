@@ -1,0 +1,30 @@
+# Isaac Sim virtual arm configuration
+arm:
+  name: isaacsim
+  type: dual
+  dof: 7
+  urdf_path: ""  # loaded from Isaac Sim asset
+  base_frame: base_link
+  ee_frame_left: left_ee_link
+  ee_frame_right: right_ee_link
+  has_gripper: true
+
+  sim:
+    scene_path: /World/Robot
+    physics_dt: 0.005  # 200Hz physics
+    rendering_dt: 0.016  # 60Hz rendering
+
+  joint_names_left: []  # populated from sim
+  joint_names_right: []
+
+  workspace:
+    x_min: -1.0
+    x_max: 1.0
+    y_min: -1.0
+    y_max: 1.0
+    z_min: 0.0
+    z_max: 1.5
+
+  retarget:
+    workspace_scale: 1.0
+    origin_offset: [0.0, 0.0, 0.5]

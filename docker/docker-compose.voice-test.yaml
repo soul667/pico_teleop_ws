@@ -1,0 +1,17 @@
+services:
+  voice:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.voice
+    container_name: pico_voice_test
+    runtime: nvidia
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=all
+      - TRANSFORMERS_CACHE=/root/.cache/huggingface
+    ports:
+      - "38271:38271"
+    volumes:
+      - ~/.cache/huggingface:/root/.cache/huggingface
+    command: pico-voice --device cuda:0
+    restart: unless-stopped

@@ -1,0 +1,22 @@
+[project]
+name = "pico-teleop-robot"
+version = "0.1.0"
+description = "Robot-side teleoperation bridge and data recorder"
+requires-python = ">=3.10"
+dependencies = [
+    "websockets>=12.0",
+    "numpy>=1.24",
+    "opencv-python>=4.8",
+    "lerobot>=0.4.0",
+    "msgpack>=1.0",
+]
+
+[project.optional-dependencies]
+dev = ["ruff", "pytest"]
+
+[project.scripts]
+pico-robot = "pico_teleop_robot.main:main"
+
+[tool.ruff]
+line-length = 120
+target-version = "py310"

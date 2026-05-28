@@ -1,0 +1,14 @@
+services:
+  robot:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.robot
+    container_name: pico_teleop_robot
+    network_mode: host
+    privileged: true
+    volumes:
+      - ./data:/app/data
+    environment:
+      - SERVER_URL=ws://localhost:38270
+    command: pico-robot --server-url ${SERVER_URL:-ws://localhost:38270} --cameras 0 1 --data-dir /app/data
+    restart: unless-stopped
